@@ -33,14 +33,14 @@ button{font:inherit;padding:6px 14px;margin-right:8px;border:1px solid var(--lin
 <div>最大待ち台数<b id="qm">0</b></div><div>平均待ち時間<b id="w">0秒</b></div><div>満車で入れなかった台数<b id="lost">0</b></div>
 <div>退場待ち(北2列/南2列)<b id="xq">0 / 0</b></div><div>最大退場待ち台数<b id="xm">0</b></div><div>平均退場待ち時間<b id="xw">0秒</b></div>
 </div>
-<p style="font-size:12px;color:var(--mut)">橙=駐車中 青=誘導中 赤=退場待ち・退場中。北側2列の退場車は東へ出て南側の誘導路を西へ、南側2列の退場車は北側の誘導路を通って東へ出る動線で、それぞれ1台ずつ通過する前提です。</p>
+<p style="font-size:12px;color:var(--mut)">橙=駐車中 青=誘導中 赤=退場待ち・退場中。入れ方は、南側2列を西から東へ(南列→その上の列を交互に)埋め、続いて北側2列を東から西へ(下の列→上の列を交互に)埋めます。北側2列の退場車は東へ出て南側の誘導路を西へ、南側2列の退場車は北側の誘導路を通って東へ出る動線で、それぞれ1台ずつ通過する前提です。</p>
 <script>
 const $=id=>document.getElementById(id),cv=$('c'),g=cv.getContext('2d');
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const v={};['A','J','G','E','S','X'].forEach(k=>{const f=()=>{v[k]=+$(k).value;$('v'+k).textContent=k==='A'?+(v[k]/60).toFixed(1):v[k]};$(k).oninput=f;f()});
 const CW=40,X0=80,YS=[48,108,138,198],CH=28;
 let s;
-function mk(){const o=[];for(let r=0;r<4;r++)for(let c=19;c>=0;c--)o.push({r,c,v:0,rd:0});
+function mk(){const o=[];for(let c=0;c<20;c++){o.push({r:3,c,v:0,rd:0});o.push({r:2,c,v:0,rd:0})}for(let c=19;c>=0;c--){o.push({r:1,c,v:0,rd:0});o.push({r:0,c,v:0,rd:0})}
  s={t:0,nx:0,jq:[],j:null,o,lq:[],sv:[],xq:[[],[]],xs:[null,null],wsum:0,wn:0,qm:0,lost:0,xw:0,xn:0,xm:0}}
 const rnd=m=>-Math.log(1-Math.random())*m;
 const free=()=>s.o.filter(x=>x.v===0).length-s.lq.length;
